@@ -3,74 +3,82 @@
 import UIKit
 
 
-protocol Person {
-    var name: String { get }
-    var canWalk: Bool { get }
-}
-
-protocol Walkable {
-    var walkSpeed: Double { get }
-}
 
 protocol Vehicle: CustomStringConvertible {
     
     var isRunning: Bool{get set}
+    var model : String { get set }
+    var makeYear : String {get set}
     mutating func start()
     mutating func stop()
     
 }
 
-struct Bus: Vehicle{
+extension Vehicle{
     
-    var isRunning: Bool = false
-    var description: String {
-        return "Bus-Desc"
+    var makeModel : String {
+        
+        return "\(makeYear) \(model)"
+        
     }
-    mutating func start() {
+    
+    mutating func start(){
+        
         if isRunning{
-            print("Started")
+            print("\(self.description) Already Started")
         }
         else{
             isRunning = true
-            print("Starting Now")
+            print("\(self.description) Starting Now")
         }
-    }
-    mutating func stop() {
-        if isRunning{
-            isRunning = false
-            print("Stopped")
-        }
-        else{
-            print("Already Stopped")
-        }
+        
+        
     }
     
+    mutating func stop(){
+        
+        if isRunning{
+            isRunning = false
+            print("\(self.description) Stopped")
+        }
+        else{
+            print("\(self.description) Already Stopped")
+        }
+
+        
+        
+    }
+    
+    
+    
+}
+
+
+struct Bus: Vehicle{
+    
+    var isRunning: Bool = false
+    var model : String
+    var makeYear: String
+    var description: String {
+        return self.makeModel
+    }
     
 }
 
 class Truck: Vehicle {
     
     var isRunning: Bool = false
+    var makeYear: String
+    var model: String
+    
+    init(isRunning:Bool,make:String,model:String) {
+        self.isRunning = isRunning
+        self.makeYear = make
+        self.model = model
+    }
+    
     var description: String {
-        return "Truck-Desc"
-    }
-    func start() {
-        if isRunning{
-            print("Already Started")
-        }
-        else{
-            isRunning = true
-            print("Starting Now")
-        }
-    }
-    func stop(){
-        if isRunning{
-            isRunning = false
-            print("Stopped")
-        }
-        else{
-            print("Already Stopped")
-        }
+        return self.makeModel
     }
     
     func lights(){
@@ -79,8 +87,8 @@ class Truck: Vehicle {
     
 }
 
-var bus = Bus()
-var truck = Truck()
+var bus = Bus(isRunning: false, model: "Omni", makeYear: "1994")
+var truck = Truck(isRunning: false, make: "1997", model: "Jeep")
 
 bus.start()
 truck.start()
@@ -89,7 +97,7 @@ truck.lights()
 
 var vehicle : Array<Vehicle> = [bus,truck]
 for veh in vehicle {
-    print("\(veh.description)")
+    print("\(veh.makeModel)")
 }
 
 
