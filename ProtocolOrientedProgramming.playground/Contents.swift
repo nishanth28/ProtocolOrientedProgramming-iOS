@@ -1,4 +1,4 @@
-//: Playground - noun: a place where people can play
+//Protocol Oriented Programming
 
 import UIKit
 
@@ -44,7 +44,7 @@ extension Vehicle{
         else{
             print("\(self.description) Already Stopped")
         }
-
+        
         
         
     }
@@ -101,6 +101,31 @@ for veh in vehicle {
 }
 
 
+//Generics
+
+func genericIncrement<T: Strideable>(number:T) -> T {
+    
+    return number + 1
+    
+}
+
+genericIncrement(number: 10.2222)
 
 
+// Generic with Binary operands
+
+protocol GenMul
+{
+    static func *(lhs:Self, rhs:Self) -> Self
+}
+
+extension Int : GenMul {}
+extension Double : GenMul {}
+extension Float : GenMul{}
+
+func genericMultiplication<T: GenMul>(lhs:T , rhs:T) -> T {
+    return lhs * rhs
+}
+
+genericMultiplication(lhs: 10.1, rhs: 10.1)
 
